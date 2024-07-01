@@ -1,6 +1,7 @@
 import requests
 import sqlite3
 import time
+import os
 
 def FetchAndStoreData():
     # Start timing
@@ -17,8 +18,12 @@ def FetchAndStoreData():
         print(f"Failed to retrieve data: {response.status_code}")
         return
 
+    # Get the current directory
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+
     # Create db and connect
-    conn = sqlite3.connect('cards.db')
+    db_path = os.path.join(current_dir, 'cards.db')
+    conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
     # Table to hold card data
